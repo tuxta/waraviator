@@ -1,4 +1,3 @@
-import pygame
 import random
 from GameFrame import Globals
 from GameFrame import RoomObject
@@ -8,12 +7,12 @@ class Island2(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
 
-        self.image = pygame.image.load("Images/island2.png")
-        self.width = 64
-        self.height = 65
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.y_speed = 4
+        image = self.load_image('island2.png')
+        self.set_image(image, 64, 65)
+
         self.depth = -100
+
+        self.y_speed = 4
 
     def step(self):
         if self.y >= Globals.SCREEN_HEIGHT:

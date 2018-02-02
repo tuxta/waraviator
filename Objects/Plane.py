@@ -8,10 +8,14 @@ class Plane(RoomObject):
     def __init__(self, room, x, y):
         RoomObject.__init__(self, room, x, y)
 
-        self.image = pygame.image.load("Images/plane.png")
-        self.width = 59
-        self.height = 42
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        self.image1 = self.load_image('plane1.png')
+        self.image2 = self.load_image('plane2.png')
+        self.image3 = self.load_image('plane3.png')
+        self.image4 = self.load_image('plane4.png')
+        self.set_image(self.image1, 89, 55)
+        self.image_count = 0
+        self.curr_img = 1
+
         self.depth = 100
 
         # - Register the Plane to handle key events - #
@@ -24,6 +28,24 @@ class Plane(RoomObject):
         self.register_collision_object('Enemy')
 
     def step(self):
+        self.image_count += 1
+        if self.image_count % 2 == 0:
+            self.curr_img += 1
+            if self.curr_img > 3:
+                self.curr_img = 0
+
+            if self.image_count == 8:
+                self.image_count = 0
+
+            if self.curr_img == 1:
+                self.set_image(self.image2, 89, 55)
+            elif self.curr_img == 2:
+                self.set_image(self.image3, 89, 55)
+            elif self.curr_img == 3:
+                self.set_image(self.image4, 89, 55)
+            elif self.curr_img == 4:
+                self.set_image(self.image1, 89, 55)
+
         # - Keep object in the room - #
         if self.rect.left <= 0:
             self.x = 0
@@ -59,10 +81,14 @@ class Plane(RoomObject):
         self.can_shoot = True
 
     def handle_collision(self, other):
-        print('Planes collide')
         other_type = type(other).__name__
         if other_type == 'Enemy':
             self.delete_object(other)
+            Globals.destroyed_count += 1
+            if Globals.destroyed_count >= 10:
+                self.room.running = False
+                Globals.total_count = 0
+                Globals.destroyed_count = 0
             self.room.update_score(-1)
             if Globals.LIVES <= 0:
                 self.room.running = False
