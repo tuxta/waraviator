@@ -4,8 +4,8 @@ from Objects import Banner, Plane, Island1, Island2, Island3, Enemy
 
 
 class Level1(Level):
-    def __init__(self, screen):
-        Level.__init__(self, screen)
+    def __init__(self, screen, joysticks):
+        Level.__init__(self, screen, joysticks)
 
         # - Set Background image - #
         self.set_background_image('ocean.png')
