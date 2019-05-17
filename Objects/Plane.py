@@ -13,7 +13,6 @@ class Plane(RoomObject):
         self.image3 = self.load_image('plane3.png')
         self.image4 = self.load_image('plane4.png')
         self.set_image(self.image1, 89, 55)
-        self.image_count = 0
         self.curr_img = 1
 
         self.depth = 100
@@ -27,25 +26,25 @@ class Plane(RoomObject):
         # - Register collisions with enemy - #
         self.register_collision_object('Enemy')
 
+        self.set_timer(5, self.update_image)
+
+    def update_image(self):
+        self.curr_img += 1
+        if self.curr_img > 3:
+            self.curr_img = 0
+        if self.curr_img == 0:
+            self.set_image(self.image1, 89, 55)
+        elif self.curr_img == 1:
+            self.set_image(self.image2, 89, 55)
+        elif self.curr_img == 2:
+            self.set_image(self.image3, 89, 55)
+        elif self.curr_img == 3:
+            self.set_image(self.image4, 89, 55)
+        elif self.curr_img == 4:
+            self.set_image(self.image1, 89, 55)
+        self.set_timer(5, self.update_image)
+
     def step(self):
-        self.image_count += 1
-        if self.image_count % 2 == 0:
-            self.curr_img += 1
-            if self.curr_img > 3:
-                self.curr_img = 0
-
-            if self.image_count == 8:
-                self.image_count = 0
-
-            if self.curr_img == 1:
-                self.set_image(self.image2, 89, 55)
-            elif self.curr_img == 2:
-                self.set_image(self.image3, 89, 55)
-            elif self.curr_img == 3:
-                self.set_image(self.image4, 89, 55)
-            elif self.curr_img == 4:
-                self.set_image(self.image1, 89, 55)
-
         # - Keep object in the room - #
         if self.rect.left <= 0:
             self.x = 0
