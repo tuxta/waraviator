@@ -17,14 +17,18 @@ class Enemy(RoomObject):
 
         self.y_speed = 5
 
-    def step(self):
+        self.set_timer(2, self.update_image)
+
+    def update_image(self):
         if self.image_1_set:
             self.image_1_set = False
             self.set_image(self.image1, 31, 27)
         else:
             self.image_1_set = True
             self.set_image(self.image2, 31, 27)
-
+        self.set_timer(2, self.update_image)
+            
+    def step(self):
         if self.y >= Globals.SCREEN_HEIGHT:
             self.y = 0 - self.height*2
             self.x = random.randint(0, Globals.SCREEN_WIDTH - self.width)

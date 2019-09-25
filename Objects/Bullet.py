@@ -18,8 +18,7 @@ class Bullet(RoomObject):
         if self.y < 0 - self.height:
             self.room.delete_object(self)
 
-    def handle_collision(self, other):
-        other_type = type(other).__name__
+    def handle_collision(self, other, other_type):
         if other_type == 'Enemy':
             self.room.explosion_sound.play()
             Globals.destroyed_count += 1

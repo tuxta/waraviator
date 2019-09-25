@@ -16,14 +16,14 @@ class Globals:
     window_name = 'War Aviator'
 
     # - Set the order of the rooms - #
-    levels = ['Level1']
+    levels = ["Level1",]
 
     # - Set the starting level - #
     start_level = 0
 
     # - Set this number to the level you want to jump to when the game ends - #
     end_game_level = 0
-    
+
     # - This variable keeps track of the room that will follow the current room - #
     # - Change this value to move through rooms in a non-sequential manner - #
     next_level = 0

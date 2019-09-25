@@ -79,8 +79,7 @@ class Plane(RoomObject):
     def reset_shooting(self):
         self.can_shoot = True
 
-    def handle_collision(self, other):
-        other_type = type(other).__name__
+    def handle_collision(self, other, other_type):
         if other_type == 'Enemy':
             self.delete_object(other)
             Globals.destroyed_count += 1
